@@ -8,11 +8,28 @@ import {
   StyledFormTitle,
 } from './PhonebookForm.styled';
 import { nanoid } from 'nanoid';
+import { useDispatch, useSelector } from 'react-redux';
+import { addContact } from 'redux/contactsSlice';
 
-export const PhonebookForm = ({ title, onSubmit }) => {
+export const PhonebookForm = ({ title }) => {
+  const contacts = useSelector(state => state.contacts.contacts);
+  const dispatch = useDispatch();
+
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
   const [id, setId] = useState('');
+
+  const addContacts = contact => {
+    const normalizedContact = contact.name.toLowerCase().trim();
+    if (
+      contacts.some(el => el.name.toLowerCase().trim() === normalizedContact)
+    ) {
+      alert(`${normalizedContact} is already in contacts!`);
+      return;
+    }
+
+    dispatch(addContact(contact));
+  };
 
   const handleChange = e => {
     const { value, name } = e.target;
@@ -24,7 +41,7 @@ export const PhonebookForm = ({ title, onSubmit }) => {
   const handleSubmit = e => {
     e.preventDefault();
 
-    onSubmit({ name, number, id });
+    addContacts({ name, number, id });
 
     reset();
   };
