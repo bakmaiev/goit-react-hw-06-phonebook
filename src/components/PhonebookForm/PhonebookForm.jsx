@@ -21,10 +21,19 @@ export const PhonebookForm = ({ title }) => {
 
   const addContacts = contact => {
     const normalizedContact = contact.name.toLowerCase().trim();
+    const normalizedNumber = contact.number.replaceAll(' ', '');
+
     if (
       contacts.some(el => el.name.toLowerCase().trim() === normalizedContact)
     ) {
-      alert(`${normalizedContact} is already in contacts!`);
+      alert(`The contact name ${normalizedContact} is already exists!`);
+      return;
+    }
+
+    if (
+      contacts.some(el => el.number.replaceAll(' ', '') === normalizedNumber)
+    ) {
+      alert(`The contact number ${normalizedNumber} is already exists!`);
       return;
     }
 
@@ -86,5 +95,4 @@ export const PhonebookForm = ({ title }) => {
 
 PhonebookForm.propTypes = {
   title: PropTypes.string.isRequired,
-  onSubmit: PropTypes.func.isRequired,
 };
