@@ -3,10 +3,11 @@ import { ContactsItem, StyledWrapper } from './ContactsList.styled';
 import { Btn } from 'components/PhonebookForm/PhonebookForm.styled';
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteContact } from 'redux/contactsSlice';
+import { getContacts, getFilter } from 'redux/selectors';
 
 export const ContactsList = () => {
-  const contacts = useSelector(state => state.contacts.contacts);
-  const filter = useSelector(state => state.filter.filter);
+  const contacts = useSelector(state => getContacts);
+  const filter = useSelector(getFilter);
   const dispatch = useDispatch();
 
   const deleteContacts = contactId => {
